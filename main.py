@@ -14,7 +14,7 @@ black = (0, 0, 0)
 screen_width = 900
 screen_height = 600
 gameWindow = pygame.display.set_mode((screen_width, screen_height))
-bg = pygame.image.load("1805487.jpg").convert()
+bg = pygame.image.load("grass.jpg").convert()
 
 gameWindow.fill(white)
 pygame.display.set_caption(gameName)
@@ -50,19 +50,26 @@ def img(img1, x, y):
 
 def game_loop():
     snk_list = []
+
     score = 0
+
     x = 0
     y = screen_height/10
+
     size_w = 50
     size_h = 50
+
     velocity_x = 0
     velocity_y = 0
     velocity = 4
+
     food_x = random.randint(5, 750)
-    food_y = random.randint(screen_height/10, 550)
+    food_y = random.randint(int(screen_height/10), 550)
+
     snk_length = 1
     fps = 60
     highscore = int(hightxt.readlines()[len(hightxt.readlines()) - 1])
+    
     print(str(highscore))
 
     running = True
@@ -95,17 +102,17 @@ def game_loop():
 
             if x < 0:
                 game_over = True
-            elif x > screen_width - 50:
+            elif x > screen_width - size_w:
                 game_over = True
             elif y < screen_height/10:
                 game_over = True
-            elif y > screen_height - 50:
+            elif y > screen_height - size_h:
                 game_over = True
 
             if float(food_x + 20) >= x >= float(food_x - 45) and float(food_y + 20) >= y >= float(food_y - 45):
                 score += 1
                 food_x = random.randint(50, 750)
-                food_y = random.randint(screen_height/10, 550)
+                food_y = random.randint(int(screen_height/10), 550)
                 snk_length += 15
                 # playsound('background_music.wav')
 
@@ -122,6 +129,7 @@ def game_loop():
             food_y = random.randint(50, 550)
 
         img(bg, 0, 0)
+        # gameWindow.fill(white)
 
         text("Score: " + str(score) + "   Highscore: " + str(highscore), black, 0, 0)
         line(black, (0, screen_height/10), (screen_width, screen_height/10))
@@ -153,4 +161,3 @@ def game_loop():
 game_loop()
 pygame.quit()
 hightxt.close()
-quit()
